@@ -71,13 +71,19 @@ class TweetCache {
 					'user_token'                 => $this->config['user_token'],
 					'user_secret'                => $this->config['user_secret'],
 			));
-			$code = $tmhOAuth->request('GET', $tmhOAuth->url('1.1/statuses/user_timeline'), array(
-			  'screen_name' => $this->config['twitterName'], 'include_rts' => true, 'include_entities' => true, 'count' => $this->config['numberOfTweets']));
+			$code = $tmhOAuth->request(
+						'GET', 
+						$tmhOAuth->url('1.1/statuses/user_timeline'), 
+						array(
+							'screen_name' => $this->config['twitterName'], 
+							'include_rts' => true, 
+							'include_entities' => true, 
+							'count' => $this->config['numberOfTweets']
+							)
+						);
 			$response = $tmhOAuth->response;
 			$response = $response['response'];
-			$output = array('expire'=>time(),'response'=>$response);
-			$this->writeData($output);
-			return $response;
+			$this->writeData(array('expire'=>time(),'response'=>$response));
 		} 
 		return $response;
 	}
